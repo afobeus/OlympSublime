@@ -1,0 +1,7 @@
+int gcd(int num_1, int num_2) {
+    if (num_1 == 0)
+        return num_2;
+    return gcd(num_2 % num_1, num_1);
+}
+
+lcm(num_1, num_2) = num_1 * num_2 / gcd(num_1, num_2)

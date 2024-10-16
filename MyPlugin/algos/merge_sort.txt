@@ -1,0 +1,63 @@
+vector<int> a;
+long long ans = 0;
+
+
+// Сортировка слиянием 
+void sort(int l, int r) {
+    if (l == r - 1) {
+        return;
+    }
+    int m = (l + r) / 2;
+    sort(l, m);
+    sort(m, r);
+    int it1 = l, it2 = m;
+    vector<int> tmp(r - l);
+    while (it1 != m || it2 != r) {
+        int ind = it1 + it2 - m - l;
+        if (it1 == m) {
+            tmp[ind] = a[it2];
+            ++it2;
+        } else if (it2 == r) {
+            tmp[ind] = a[it1];
+            ++it1;
+        } else if (a[it1] <= a[it2]) {
+            tmp[ind] = a[it1];
+            ++it1;
+        } else {
+            tmp[ind] = a[it2];
+            ++it2;
+        }
+    }
+    copy(tmp.begin(), tmp.end(), a.begin() + l);
+}
+
+// Модифицированная сортировка слиянием с подсчётом инверсий
+
+void sort(int l, int r) {
+    if (l == r - 1) {
+        return;
+    }
+    int m = (l + r) / 2;
+    sort(l, m);
+    sort(m, r);
+    int it1 = l, it2 = m;
+    vector<int> tmp(r - l);
+    while (it1 != m || it2 != r) {
+        int ind = it1 + it2 - m - l;
+        if (it1 == m) {
+            tmp[ind] = a[it2];
+            ++it2;
+        } else if (it2 == r) {
+            tmp[ind] = a[it1];
+            ++it1;
+        } else if (a[it1] <= a[it2]) {
+            tmp[ind] = a[it1];
+            ++it1;
+        } else {
+            tmp[ind] = a[it2];
+            ans += (m - it1);
+            ++it2;
+        }
+    }
+    copy(tmp.begin(), tmp.end(), a.begin() + l);
+}

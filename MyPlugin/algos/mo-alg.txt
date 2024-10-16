@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <unordered_map>
+#include <cmath>
+ 
+using namespace std;
+ 
+struct Mo {
+    unordered_map<int, int> cnt;
+    void add(int x) {
+        cnt[x]++;
+    }
+    void del(int x) {
+        cnt[x]--;
+        if (cnt[x] == 0) {
+            cnt.erase(x);
+        }
+    }
+    int f() {
+        return cnt.size();
+    }
+};
+ 
+struct Query {
+    int l, r, num;
+    Query() {}
+    Query(int l, int r, int num) :l(l), r(r), num(num) {}
+};
+ 
+int K;
+ 
+inline bool cmp(const Query& a, const Query& b) {
+    return make_pair(a.l / K, a.r) < make_pair(b.l / K, b.r);
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int n;
+    cin >> n;
+    K = (int)sqrt(n);
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+    vector<Query> queries;
+    int q;
+    cin >> q;
+    for (int i = 0; i < q; ++i) {
+        int l, r;
+        cin >> l >> r; //нумерация с 0
+        queries.push_back(Query(l, r, i));
+    }
+    sort(queries.begin(), queries.end(), cmp);
+    int l = 0, r = -1;
+    Mo m;
+    vector<int> ans(q);
+    for (auto& qr : queries) {
+        while (l > qr.l) {
+            m.add(a[l - 1]);
+            l--;
+        }
+        while (r < qr.r) {
+            m.add(a[r + 1]);
+            r++;
+        }
+        while (l < qr.l) {
+            m.del(a[l]);
+            l++;
+        }
+        while (r > qr.r) {
+            m.del(a[r]);
+            r--;
+        }
+        ans[qr.num] = m.f();
+    }
+}

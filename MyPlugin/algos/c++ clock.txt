@@ -1,0 +1,11 @@
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int clock_start = clock();
+
+    cout << (clock() - clock_start) * 1.0 / CLOCKS_PER_SEC;
+
+
+    return 0;
+}

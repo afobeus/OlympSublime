@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+ 
+using namespace std;
+ 
+typedef long long ll;
+ 
+ll p = 131, Mod = 1e9 + 7;
+vector<ll> powers(100000);
+ 
+vector<ll> getHash(const string& s) {
+    int n = s.size();
+    vector<ll> h(n);
+    h[0] = s[0];
+    for (int i = 1; i < n; ++i) {
+        h[i] = (h[i - 1] * p + s[i]) % Mod;
+    }
+    return h;
+}
+ 
+ll subHash(int l, int r, const vector<ll>& h) {
+    ll R = h[r];
+    ll L = 0;
+    if (l > 0) {
+        L = (h[l - 1] * powers[r - l + 1]) % Mod;
+    }
+    return (R - L + Mod) % Mod;
+}
+ 
+int main() {
+    powers[0] = 1;
+    for (int i = 1; i < 100000; ++i) {
+        powers[i] = (powers[i - 1] * p) % Mod;
+    }
+}

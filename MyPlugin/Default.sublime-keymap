@@ -1,0 +1,4 @@
+[
+    { "keys": ["ctrl+shift+q"], "command": "paste_algorithm"},
+    { "keys": ["ctrl+shift+z"], "command": "open_copy"}
+]
