@@ -1,0 +1,1 @@
+To enable plugin extract MyPlugin folder to C:\Users\<your user>\AppData\Roaming\Sublime Text\Packages
